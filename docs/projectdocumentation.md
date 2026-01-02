@@ -1,78 +1,41 @@
 # 🧠 Multi-Agent Content Generation System (CrewAI)
 
-A framework-based, multi-agent content generation system built using **CrewAI** that transforms structured product data into validated, machine-readable JSON content through real LLM-backed agent collaboration.
+A **framework-based, agentic automation system** built using **CrewAI** that generates structured, machine-readable content from product data using **real LLM-backed agents**, task orchestration, and schema validation.
 
 
 
 ## 📌 Problem Statement
 
-The objective of this project is to design and implement a **framework-driven multi-agent system** that consumes structured product data and automatically generates categorized, machine-readable content.
+The objective of this assignment is to design and implement a **true multi-agent content generation system** that:
 
-The system must:
+* Uses a **real agentic framework** (CrewAI)
+* Employs **LLM-backed autonomous agents**
+* Avoids **hardcoded or rule-based outputs**
+* Produces **validated, machine-readable JSON**
+* Demonstrates **clean system design and orchestration**
 
-* Use a **real agentic framework** (CrewAI)
-* Implement **LLM-backed autonomous agents**
-* Enforce **schema validation**
-* Follow a clear **orchestration pipeline**
-* Avoid hardcoded or fake outputs
-
-The focus is on **agent design, orchestration, and robustness**, rather than content creativity.
+The focus is on **agent autonomy, orchestration quality, and robustness**, not content creativity.
 
 ---
 
 ## 💡 Solution Overview
 
-The solution is implemented using **CrewAI**, where multiple autonomous agents collaborate to analyze product data, generate content, and structure outputs.
+This project implements a **CrewAI-orchestrated multi-agent system** where independent agents collaborate to analyze product data and generate structured FAQ content.
 
-Each agent performs a **single responsibility**, and a CrewAI orchestrator manages task execution, context passing, and output validation.
+Each agent is responsible for a **single, well-defined task**, while CrewAI manages:
 
-Generated outputs include:
+* Task sequencing
+* Context propagation between agents
+* Execution control
+* Output validation
 
-* FAQ Page (≥15 FAQs)
-* Structured JSON compliant with a Pydantic schema
-
-The system emphasizes:
-
-* Framework-based orchestration
-* Agent autonomy
-* Clear data flow
-* Deterministic output validation
+The system generates a **schema-validated JSON FAQ page** containing **at least 15 FAQs**, fully compliant with assignment constraints.
 
 ---
 
-## 🧠 Technologies Used
+## 🏗️ System Architecture
 
-* **Python 3.12**
-* **CrewAI** – multi-agent orchestration framework
-* **OpenAI API** – LLM-powered agent reasoning
-* **Pydantic** – schema validation
-* **dotenv** – environment configuration
-* **JSON** – structured output format
-
----
-
-## 🔍 Scope & Assumptions
-
-### Scope
-
-* Processes a fixed, structured product dataset
-* Uses **LLM-backed agents** via CrewAI
-* Generates **validated JSON outputs**
-* Enforces minimum content constraints (e.g., FAQ count ≥ 15)
-
-### Assumptions
-
-* LLMs are used strictly within the provided product context
-* No external web search or external data sources are used
-* The system is designed for extensibility but demonstrated for a single product
-
----
-
-## 🏗️ System Design (Core Focus)
-
-### Overall Architecture
-
-The system follows a **CrewAI-orchestrated multi-agent pipeline**:
+The system follows a **single authoritative CrewAI pipeline**:
 
 ```
 Product Data
@@ -88,107 +51,115 @@ Pydantic Schema Validation
 JSON Output (faq.json)
 ```
 
----
-
-### Agent Responsibilities
-
-**Product Analyst Agent**
-Analyzes structured product input and builds a clear internal understanding of:
-
-* Purpose
-* Ingredients
-* Benefits
-* Usage
-* Side effects
-* Target users
-* Price
-
-**FAQ Generator Agent**
-Generates **≥15 user-focused FAQs** strictly grounded in the analyzed product data.
-
-**Content Structuring Agent**
-Transforms generated content into a **schema-compliant JSON structure**, enforcing correctness and completeness.
-
-Each agent is:
-
-* LLM-backed
-* Autonomous
-* Stateless
-* Single-responsibility
+⚠️ **Important**:
+This repository contains **only one implementation** — the CrewAI-based system.
+All legacy, non-framework, hardcoded, or wrapper implementations have been **fully removed**.
 
 ---
 
-## 🧩 Task-Oriented Orchestration
+## 🤖 Agents & Responsibilities
 
-Tasks are defined explicitly using CrewAI’s `Task` abstraction:
+### 🧩 Product Analyst Agent
 
-* Product analysis task
-* FAQ generation task
-* Content structuring & validation task
+* Analyzes structured product input
+* Builds a semantic understanding of:
 
-CrewAI manages:
+  * Purpose
+  * Ingredients
+  * Benefits
+  * Usage
+  * Side effects
+  * Target users
+  * Price
+* Uses **LLM reasoning**
+* No hardcoded logic
 
-* Execution order
-* Context propagation
-* Error handling
-* Agent-task coordination
+---
+
+### ❓ FAQ Generator Agent
+
+* Generates **≥15 user-focused FAQs**
+* Answers are strictly grounded in analyzed product data
+* No external data or hallucinated content
+* Uses **LLM-based reasoning**
+
+---
+
+### 🧱 Content Structuring Agent
+
+* Converts generated FAQs into structured JSON
+* Enforces correctness via **Pydantic schema**
+* Rejects invalid or incomplete outputs
 
 ---
 
 ## 📐 Schema Validation
 
-Final outputs are validated using **Pydantic schemas**, ensuring:
+Final output is validated using **Pydantic**, ensuring:
 
-* Required fields exist
-* Data types are enforced
-* Minimum FAQ count is satisfied
+* Required fields are present
+* Correct data types
+* Minimum FAQ count (≥15) is enforced
+* No malformed JSON is produced
 
-Invalid outputs are rejected automatically.
+Schema validation is a **hard constraint**, not optional.
 
 ---
 
-## 📄 Output Files
+## 📄 Output Artifact
 
-The system generates the following machine-readable output:
+Generated file:
 
-* `outputs/faq.json`
+```
+outputs/faq.json
+```
 
-The output contains:
+Contents:
 
 * `product_name`
-* An array of **≥15 validated FAQs**
-* Clean, structured JSON suitable for downstream systems
+* Array of **at least 15 FAQs**
+* Each FAQ contains:
+
+  * `question`
+  * `answer`
+
+The output is **fully machine-readable and production-ready**.
 
 ---
 
-## 📊 Execution Flow (Textual)
+## ⚙️ Orchestration & Execution
 
-```
-CrewAI Orchestrator
-   → Product Analyst Agent
-   → FAQ Generator Agent
-   → Content Structuring Agent
-   → Schema Validation
-   → JSON Output
-```
+* Agents are executed via **CrewAI Tasks**
+* Tasks define:
+
+  * Objective
+  * Expected output
+  * Validation constraints
+* CrewAI handles:
+
+  * Agent execution order
+  * Context sharing
+  * Failure handling
+
+There is **no manual orchestration** or sequential scripting.
 
 ---
 
 ## 🚀 How to Run
 
-### 1. Install dependencies
+### 1️⃣ Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 2. Set environment variable
+### 2️⃣ Set environment variable
 
 ```bash
 OPENAI_API_KEY=your_api_key_here
 ```
 
-### 3. Run the system
+### 3️⃣ Run the system
 
 ```bash
 python run_crewai.py
@@ -196,15 +167,37 @@ python run_crewai.py
 
 ---
 
-## ✅ Conclusion
+## 🧠 Technologies Used
 
-This project demonstrates a **real agentic system** built with CrewAI, featuring:
+* **Python 3.12**
+* **CrewAI** — multi-agent orchestration framework
+* **OpenAI API** — LLM-powered agent reasoning
+* **Pydantic** — schema validation
+* **dotenv** — environment configuration
+* **JSON** — structured output format
+
+---
+
+| Requirement                 | Status   |
+| --------------------------- | -------- |
+| Multi-agent framework       | ✅ CrewAI |
+| Real LLM usage              | ✅        |
+| No hardcoded outputs        | ✅        |
+| No fake / wrapper agents    | ✅        |
+| Single authoritative system | ✅        |
+| ≥15 FAQs enforced           | ✅        |
+| Schema validation           | ✅        |
+| Machine-readable output     | ✅        |
+| Clear orchestration         | ✅        |
+
+---
+
+## 🏁 Conclusion
+
+This project demonstrates a **clean, production-grade agentic system** built using CrewAI.
+
+By combining:
 
 * Autonomous LLM-backed agents
 * Framework-based orchestration
 * Schema-validated outputs
-* Robust, non-hardcoded content generation
-
-
-
-
